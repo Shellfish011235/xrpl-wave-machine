@@ -24,6 +24,9 @@ import { useXaman } from "./hooks/useXaman";
 import { SpaceQR } from "./components/SpaceQR";
 import BugHuntView from "./components/BugHuntView";
 import SecurityLabView from "./components/SecurityLabView";
+import RadarView from "./components/RadarView";
+import { AppStatusChips } from "./components/AppStatusChips";
+import { APP_LIFECYCLE_LABELS } from "./data/appStatus";
 
 
 /* ---------- Reel ---------- */
@@ -66,9 +69,6 @@ const Chip = ({ children, tone = "cyan" }) => {
 const Panel = ({ children, className = "" }) => (
   <div className={`rounded-2xl border border-indigo-500/25 bg-[#0b0b22]/90 shadow-[0_0_40px_rgba(60,40,160,0.12)] ${className}`}>{children}</div>
 );
-
-const statusTone = (s) =>
-  s === "Mainnet Activity Verified" ? "green" : s === "Developer Verified" ? "cyan" : s === "Sponsored Placement" ? "amber" : "slate";
 
 /* ---------- Swag eligibility helpers ---------- */
 const monthKey = (date = new Date()) => `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
@@ -566,7 +566,7 @@ const startMission = () => {
               <div className="flex-1">
                 <div className="text-[10px] font-mono tracking-[0.25em] text-emerald-300 uppercase mb-1">Your Wave</div>
                 <div className="text-sm text-slate-200 font-semibold">{result.category.label} → {result.app.name} → {result.app.mission.title}</div>
-                <div className="mt-1 flex flex-wrap gap-1.5">{result.app.status.map((s) => <Chip key={s} tone={statusTone(s)}>{s}</Chip>)}</div>
+                <AppStatusChips app={result.app} showAuditWarning />
               </div>
               <button onClick={startMission} className="px-4 py-2 rounded-lg font-bold text-sm text-[#06121a] bg-gradient-to-r from-emerald-300 to-cyan-300 flex items-center gap-1.5 shrink-0">
                 View mission <ChevronRight size={15} />
@@ -678,7 +678,7 @@ const startMission = () => {
               <div className="text-[10px] font-mono tracking-[0.25em] uppercase" style={{ color: cat.color }}>{cat.label} mission</div>
               <h2 className="text-2xl font-black text-white">{m.title}</h2>
               <p className="text-sm text-slate-400 mt-1">{app.desc}</p>
-              <div className="mt-2 flex flex-wrap gap-1.5">{app.status.map((s) => <Chip key={s} tone={statusTone(s)}>{s}</Chip>)}{!app.status.includes("Mainnet Activity Verified") && <Chip tone="amber">Not independently audited</Chip>}</div>
+              <AppStatusChips app={app} showAuditWarning />
             </div>
           </div>
 
@@ -920,10 +920,21 @@ const startMission = () => {
   })();
 
   const AppsView = (
-    <div className="max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-4">
-        <div className="text-[10px] font-mono tracking-[0.3em] text-slate-500 uppercase">Live apps · {SPIN_APPS.length}</div>
-        <div className="flex gap-1.5 flex-wrap">{["Mainnet Activity Verified","Developer Verified","Community Submitted"].map(s => <Chip key={s} tone={statusTone(s)}>{s}</Chip>)}</div>
+    <div className="max-w-4xl mx-auto space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1">
+        <div>
+          <div className="text-[10px] font-mono tracking-[0.3em] text-slate-500 uppercase">Verified live apps · {SPIN_APPS.length}</div>
+          <p className="text-[11px] text-slate-500 mt-1">Only Verified Live apps enter the public spin pool.</p>
+        </div>
+        <button onClick={() => setView("radar")} className="px-3 py-1.5 rounded-lg text-xs font-mono tracking-wider uppercase border border-fuchsia-400/35 text-fuchsia-200 hover:bg-fuchsia-400/10 flex items-center gap-1.5 shrink-0">
+          <Radio size={12} /> XRPL Radar
+        </button>
+      </div>
+      <div className="flex gap-1.5 flex-wrap">
+        <Chip tone="green">{APP_LIFECYCLE_LABELS["verified-live"]}</Chip>
+        {["Mainnet Activity Verified", "Developer Verified", "Community Submitted"].map((s) => (
+          <Chip key={s} tone="slate">{s}</Chip>
+        ))}
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         {SPIN_APPS.map((a) => {
@@ -935,7 +946,7 @@ const startMission = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2"><span className="font-bold text-white">{a.name}</span><span className="text-[9px] font-mono uppercase tracking-wider" style={{ color: cat.color }}>{cat.label}</span></div>
                   <p className="text-xs text-slate-400 mt-0.5">{a.desc}</p>
-                  <div className="mt-2 flex flex-wrap gap-1">{a.status.map((s) => <Chip key={s} tone={statusTone(s)}>{s}</Chip>)}</div>
+                  <AppStatusChips app={a} className="mt-2" />
                   <div className="mt-2.5 flex items-center justify-between">
                     <span className="text-[11px] text-slate-500 font-mono">Mission: {a.mission.title} · +{a.mission.xp} XP</span>
                     <a href={a.url} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200"><ExternalLink size={14} /></a>
@@ -1093,6 +1104,7 @@ const startMission = () => {
             <NavBtn id="passport" label="Passport" />
             <NavBtn id="leaderboard" label="Leaderboard" />
             <NavBtn id="apps" label="Apps" />
+            <NavBtn id="radar" label="Radar" />
             <NavBtn id="spaces" label="Spaces" />
             <NavBtn id="bug-hunt" label="Bug Hunt" />
             <NavBtn id="developers" label="Developers" />
@@ -1109,7 +1121,7 @@ const startMission = () => {
           </div>
         </div>
         <div className="md:hidden max-w-6xl mx-auto px-4 pb-2 flex gap-1 overflow-x-auto">
-          <NavBtn id="home" label="Discover" /><NavBtn id="passport" label="Passport" /><NavBtn id="leaderboard" label="Ranks" /><NavBtn id="apps" label="Apps" /><NavBtn id="spaces" label="Spaces" /><NavBtn id="bug-hunt" label="Hunt" /><NavBtn id="developers" label="Devs" />
+          <NavBtn id="home" label="Discover" /><NavBtn id="passport" label="Passport" /><NavBtn id="leaderboard" label="Ranks" /><NavBtn id="apps" label="Apps" /><NavBtn id="radar" label="Radar" /><NavBtn id="spaces" label="Spaces" /><NavBtn id="bug-hunt" label="Hunt" /><NavBtn id="developers" label="Devs" />
         </div>
       </header>
 
@@ -1119,6 +1131,7 @@ const startMission = () => {
         {view === "passport" && PassportView}
         {view === "leaderboard" && LeaderboardView}
         {view === "apps" && AppsView}
+        {view === "radar" && <RadarView />}
         {view === "spaces" && SpacesView}
         {view === "bug-hunt" && (
           <BugHuntView wallet={wallet} initialMode={bugHuntMode} onTestComplete={handleBugHuntTest} onQuestComplete={handleSecurityLabQuest} />

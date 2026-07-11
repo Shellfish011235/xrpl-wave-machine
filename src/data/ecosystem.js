@@ -17,6 +17,7 @@ import {
   RefreshCw,
   Award,
 } from "lucide-react";
+import { APP_LIFECYCLE } from "./appStatus.js";
 
 // External AI / security vendor apps are withheld from APPS until mainnet-verifiable.
 // Built-in utilities: waveMachine.js + Security Lab — never in the public spinner.
@@ -41,7 +42,8 @@ export const APPS = [
     category: "wallets",
     url: "https://xaman.app",
     desc: "Self-custodial XRPL wallet for payments, signing, xApps, and account management.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "X",
     mission: {
       title: "Send a small XRP payment",
@@ -66,7 +68,8 @@ export const APPS = [
     category: "wallets",
     url: "https://gemwallet.app",
     desc: "Open-source XRPL browser-extension wallet with developer APIs and dApp connectivity.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "G",
     mission: {
       title: "Make a payment with GemWallet",
@@ -91,7 +94,8 @@ export const APPS = [
     category: "wallets",
     url: "https://crossmark.io",
     desc: "Browser wallet for XRPL payments, assets, identity, and decentralized applications.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "C",
     mission: {
       title: "Sign an XRPL payment",
@@ -116,7 +120,8 @@ export const APPS = [
     category: "wallets",
     url: "https://joeywallet.xyz",
     desc: "Mobile XRPL wallet with swaps, token information, NFTs, and dApp connectivity.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "J",
     mission: {
       title: "Send XRP from Joey Wallet",
@@ -141,7 +146,8 @@ export const APPS = [
     category: "wallets",
     url: "https://www.xrptoolkit.com",
     desc: "XRPL account, asset, payment, and DEX interface with broad wallet support.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "T",
     mission: {
       title: "Create a small DEX offer",
@@ -166,7 +172,8 @@ export const APPS = [
     category: "wallets",
     url: "https://bifrostwallet.com",
     desc: "Multi-chain self-custody wallet supporting XRP accounts, assets, NFTs, and dApps.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "B",
     mission: {
       title: "Send XRP with Bifrost",
@@ -191,7 +198,8 @@ export const APPS = [
     category: "payments",
     url: "https://gatehub.net",
     desc: "Established XRPL wallet and gateway for payments and issued currencies.",
-    status: ["Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Mainnet Activity Verified"],
     glyph: "G",
     mission: {
       title: "Add an issued-currency trust line",
@@ -216,7 +224,8 @@ export const APPS = [
     category: "trading",
     url: "https://xaman.app",
     desc: "Native XRPL swap experience inside Xaman using ledger liquidity and pathfinding.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "XS",
     mission: {
       title: "Complete a tiny XRPL swap",
@@ -241,7 +250,8 @@ export const APPS = [
     category: "trading",
     url: "https://xmagnetic.org",
     desc: "XRPL DEX, swaps, AMM tools, token markets, and ecosystem utilities.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "M",
     mission: {
       title: "Complete a beginner token swap",
@@ -266,7 +276,8 @@ export const APPS = [
     category: "trading",
     url: "https://firstledger.net",
     desc: "XRPL token discovery, launches, trading, pools, leaderboards, and wallet integrations.",
-    status: ["Mainnet Activity Verified"],
+    status: "manual-review",
+    trust: ["Mainnet Activity Verified"],
     glyph: "F",
     mission: {
       title: "Place a small DEX order",
@@ -291,7 +302,8 @@ export const APPS = [
     category: "trading",
     url: "https://sologenic.org",
     desc: "XRPL trading, swaps, AMM access, tokenization, NFTs, and bridging tools.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "S",
     mission: {
       title: "Open a verified trust line",
@@ -316,7 +328,8 @@ export const APPS = [
     category: "trading",
     url: "https://unhosted.exchange",
     desc: "Non-custodial interface for XRPL order books, offers, and decentralized trading.",
-    status: ["Mainnet Activity Verified"],
+    status: "manual-review",
+    trust: ["Mainnet Activity Verified"],
     glyph: "U",
     mission: {
       title: "Create a tiny limit order",
@@ -341,7 +354,8 @@ export const APPS = [
     category: "defi",
     url: "https://dex.anodos.finance",
     desc: "XRPL portfolio, exchange, swaps, liquidity, bridge, and fiat-access interface.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "A",
     mission: {
       title: "Complete a small XRPL swap",
@@ -366,7 +380,8 @@ export const APPS = [
     category: "defi",
     url: "https://xpmarket.com",
     desc: "XRPL market data, token discovery, swaps, AMM pools, NFTs, and portfolio tools.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "P",
     mission: {
       title: "Make a tiny XRPL swap",
@@ -391,7 +406,8 @@ export const APPS = [
     category: "defi",
     url: "https://orchestra.finance",
     desc: "Interface for XRPL native AMMs, swaps, pool governance, and continuous auctions.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "O",
     mission: {
       title: "Deposit into an XRPL AMM",
@@ -416,7 +432,8 @@ export const APPS = [
     category: "nfts",
     url: "https://xrp.cafe",
     desc: "XRPL NFT marketplace for artists, collectors, collections, and offers.",
-    status: ["Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Mainnet Activity Verified"],
     glyph: "C",
     mission: {
       title: "Support an XRPL artist",
@@ -441,7 +458,8 @@ export const APPS = [
     category: "nfts",
     url: "https://nftmaster.com",
     desc: "XRPL NFT marketplace and creation platform with collections, minting, and offers.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "N",
     mission: {
       title: "Mint an original XRPL NFT",
@@ -466,7 +484,8 @@ export const APPS = [
     category: "gaming",
     url: "https://xspectar.com",
     desc: "XRPL-connected metaverse, marketplace, land, characters, and digital experiences.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "X",
     mission: {
       title: "Acquire an XRPL digital collectible",
@@ -491,7 +510,8 @@ export const APPS = [
     category: "tools",
     url: "https://bithomp.com",
     desc: "XRPL explorer for accounts, transactions, tokens, NFTs, AMMs, and account settings.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "developer-tool",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "B",
     mission: {
       title: "Update an XRPL account setting",
@@ -516,7 +536,8 @@ export const APPS = [
     category: "tools",
     url: "https://xrpscan.com",
     desc: "XRPL explorer for ledgers, accounts, transactions, validators, amendments, and network data.",
-    status: ["Mainnet Activity Verified"],
+    status: "developer-tool",
+    trust: ["Mainnet Activity Verified"],
     glyph: "R",
     mission: {
       title: "Send and inspect an XRP payment",
@@ -541,7 +562,8 @@ export const APPS = [
     category: "tools",
     url: "https://xrpl.services",
     desc: "XRPL utilities for account settings, trust lines, reserves, and ledger interactions.",
-    status: ["Mainnet Activity Verified"],
+    status: "developer-tool",
+    trust: ["Mainnet Activity Verified"],
     glyph: "S",
     mission: {
       title: "Create a verified trust line",
@@ -566,7 +588,8 @@ export const APPS = [
     category: "tools",
     url: "https://xrplwin.com",
     desc: "XRPL dashboards, network statistics, tokens, validators, oracles, and developer tools.",
-    status: ["Developer Verified", "Mainnet Activity Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified", "Mainnet Activity Verified"],
     glyph: "W",
     mission: {
       title: "Trace your latest XRP payment",
@@ -591,7 +614,8 @@ export const APPS = [
     category: "enterprise",
     url: "https://spendthebits.com",
     desc: "Enterprise stablecoin payment and settlement infrastructure for financial institutions.",
-    status: ["Developer Verified"],
+    status: "verified-live",
+    trust: ["Developer Verified"],
     glyph: "SN",
     mission: {
       title: "Complete an enterprise payment test",
@@ -610,10 +634,78 @@ export const APPS = [
       ],
     },
   },
+  {
+    id: "eigenthrope",
+    name: "Eigenthrope",
+    category: "ai",
+    url: null,
+    desc: "Autonomous XRPL agent framework for on-ledger task orchestration — buildathon preview.",
+    status: "coming-soon",
+    trust: [],
+    glyph: "E",
+    radarStub: true,
+    buildathon: true,
+    radarNote: "Buildathon project stub — not eligible for the public spin pool.",
+  },
+  {
+    id: "faraday",
+    name: "Faraday",
+    category: "defi",
+    url: null,
+    desc: "Cross-chain liquidity router concept for XRPL AMM pools — awaiting mainnet verification.",
+    status: "manual-review",
+    trust: ["Community Submitted"],
+    glyph: "F",
+    radarStub: true,
+    buildathon: true,
+    radarNote: "Submitted for manual review — missions disabled until Verified Live.",
+  },
+  {
+    id: "rippleit",
+    name: "RippleIt",
+    category: "payments",
+    url: null,
+    desc: "Micro-tipping and social payments layer for XRPL creators — pre-launch.",
+    status: "coming-soon",
+    trust: [],
+    glyph: "R",
+    radarStub: true,
+    buildathon: true,
+    radarNote: "Coming soon — listed on Radar for visibility only.",
+  },
+  {
+    id: "ledgerloom",
+    name: "LedgerLoom",
+    category: "tools",
+    url: "https://testnet.xrpl.org",
+    desc: "Testnet transaction composer and amendment sandbox for protocol learners.",
+    status: "testnet",
+    trust: [],
+    glyph: "L",
+    radarStub: true,
+    radarNote: "Testnet-only tooling — mainnet missions are not supported.",
+  },
+  {
+    id: "agentverse",
+    name: "XRPL Agentverse",
+    category: "ai",
+    url: null,
+    desc: "Multi-agent coordination hub for XRPL xApps and automated workflows — inactive preview.",
+    status: "inactive",
+    trust: [],
+    glyph: "A",
+    radarStub: true,
+    buildathon: true,
+    radarNote: "Inactive buildathon entry — preserved for ecosystem tracking.",
+  },
+
 ];
 
 /** Live external apps for the discovery spinner only */
-export const SPIN_APPS = APPS;
+export const SPIN_APPS = APPS.filter((a) => a.status === APP_LIFECYCLE.VERIFIED_LIVE);
+
+/** Apps outside the public spin pool — Radar, review queue, testnet, stubs */
+export const RADAR_APPS = APPS.filter((a) => a.status !== APP_LIFECYCLE.VERIFIED_LIVE);
 
 export { WAVE_MACHINE, SECURITY_LAB_ENTRY } from "./waveMachine.js";
 
