@@ -1,10 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import AppErrorBoundary from "./components/AppErrorBoundary";
+import { installStorageGuard } from "./lib/storageGuard";
 import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+installStorageGuard();
+
+const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+  throw new Error("XRPL Wave Machine could not find the #root mount element.");
+}
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <App />
+    <AppErrorBoundary>
+      <App />
+    </AppErrorBoundary>
   </React.StrictMode>
 );
