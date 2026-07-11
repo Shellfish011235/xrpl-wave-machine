@@ -1,0 +1,39 @@
+# XRPL Security Lab — isolated standalone differential testing
+# Requires Docker. Never points at Mainnet.
+#
+# Usage (from repo root):
+#   docker compose -f docker/security-lab/docker-compose.yml up -d
+#   docker compose -f docker/security-lab/docker-compose.yml down -v
+#
+# Image tags are overridden at runtime via BASELINE_TAG / CANDIDATE_TAG env vars.
+
+services:
+  xrpld-baseline:
+    image: xrpllab/xrpld:${BASELINE_TAG:-2.3.0}
+    container_name: wsl-xrpld-baseline
+    ports:
+      - "${BASELINE_RPC_PORT:-51234}:51234"
+    volumes:
+      - ./configs/standalone-baseline.cfg:/etc/opt/ripple/rippled.cfg:ro
+    command: ["--conf", "/etc/opt/ripple/rippled.cfg"]
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:51234/", "-d", "{\"method\":\"server_info\"}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+
+  xrpld-candidate:
+    image: xrpllab/xrpld:${CANDIDATE_TAG:-2.4.0}
+    container_name: wsl-xrpld-candidate
+    ports:
+      - "${CANDIDATE_RPC_PORT:-51235}:51234"
+    volumes:
+      - ./configs/standalone-candidate.cfg:/etc/opt/ripple/rippled.cfg:ro
+    command: ["--conf", "/etc/opt/ripple/rippled.cfg"]
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:51234/", "-d", "{\"method\":\"server_info\"}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s

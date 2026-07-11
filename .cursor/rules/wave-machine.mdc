@@ -1,0 +1,60 @@
+---
+description: XRPL Wave Machine — project rules for Cursor
+alwaysApply: true
+---
+
+# XRPL Wave Machine — Project Rules
+
+## What this is
+A gamified discovery & activation layer for the XRP Ledger, built for the
+XRPL Commons "Make Waves on XRPL" buildathon (Jun 21 – Sep 21, 2026).
+Users spin (Category → App → Mission), complete a real action in a live
+XRPL app, and Wave Machine verifies it against public mainnet history.
+
+## Non-negotiable invariants — never violate these
+1. READ-ONLY & NON-CUSTODIAL. This app never holds keys, never signs,
+   never constructs transactions for users. Verification reads public
+   `account_tx` history only. Xaman sign-in is identity-only (SignIn
+   pseudo-transaction via PKCE).
+2. NOT A WAGERING SYSTEM. Spins are free and rate-limited. Never add
+   any mechanic where users deposit value for a chance at more value.
+   Rewards come from verified actions, never random outcomes.
+3. ANTI-FARMING. Repeat completions of the same mission earn 0 XP.
+   Leaderboards rank unique verified missions, never raw transaction
+   volume. This directly satisfies the Commons Code of Conduct ban on
+   metric manipulation / sybil / wash activity — treat it as load-bearing.
+4. TRUST TRANSPARENCY. Every app shows verification status
+   (Community Submitted / Developer Verified / Mainnet Activity Verified)
+   and risk info BEFORE the user starts. Sponsored placement must always
+   be disclosed; never present paid placement as organic.
+5. MAINNET. The competition requires live mainnet products. Do not add
+   testnet-only paths as the primary flow.
+
+## Architecture
+- src/App.jsx        — all views (Discover/Mission/Passport/Leaderboard/Apps/Devs)
+- src/data/ecosystem.js — CATEGORIES, APPS (+missions), BADGE_DEFS, mock leaders
+- src/lib/xrpl.js    — read-only WebSocket helpers (account_info, account_tx matcher)
+- src/hooks/useXaman.js — QR sign-in (PKCE); degrades to manual r-address entry
+
+Verification model: missions verify by TRANSACTION TYPE in the user's own
+history (Payment, TrustSet, OfferCreate, AMMDeposit, NFTokenMint,
+NFTokenAcceptOffer, AccountSet) after mission start time — no designated
+destination addresses, nothing custodial to maintain.
+
+## Stack & conventions
+- Vite + React 18 + Tailwind (core utilities) + lucide-react icons.
+- Aesthetic: mission-control / HUD. Deep space navy (#060614 bg, #0b0b22
+  panels), neon cyan (#22d3ee) / purple (#a855f7) / fuchsia accents,
+  font-mono uppercase tracking-widest for HUD labels.
+  NOT: RPG skins, skill trees, fake game mechanics, visual clutter.
+- State is currently in-memory (useState). Next milestone: Supabase
+  persistence for users/apps/missions/completions/spins (schema in README).
+- Secrets discipline: VITE_XAMAN_API_KEY is public-safe; the Xaman API
+  SECRET and any Anthropic keys live only in Vercel server env vars.
+
+## When asked to add features
+- Server-side verification (Vercel API routes) should mirror src/lib/xrpl.js
+  and add per-IP + per-wallet rate limiting (same pattern as the
+  XRPL Control Room api/ai.ts proxy).
+- Keep copy plain and safety-forward: estimated time, cost, risk, and
+  "never asks for your keys" language stays on every mission screen.
